@@ -1,0 +1,222 @@
+\documentclass[report,paper=b5,fontsize=13Q]{jlreq}
+% \documentclass[report,paper=b5,gutter=16mm,head_space=20mm,number_of_lines=45,line_length=150mm,fontsize=13Q]{jlreq}
+
+% LuaTeX
+\usepackage{luatexja-otf}
+\usepackage[sourcehan-jp,no-math,match,deluxe,jfm_yoko=jlreq]{luatexja-preset}
+
+% 基本パッケージ
+\usepackage{graphicx}
+\usepackage[svgnames]{xcolor}
+\usepackage{float}
+\usepackage{mathtools,amssymb,amsthm}
+\usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
+\usepackage{cleveref}
+\usepackage{enumitem}
+\usepackage{comment}
+
+% 組版処理パッケージ
+\usepackage{geometry}
+\usepackage{tocloft}
+\usepackage{bxghost}
+\usepackage{mathpunctspace}
+
+% 追加パッケージ
+\usepackage{makeidx}
+\usepackage{subfiles}
+\usepackage{hologo}
+\usepackage{lipsum}
+\usepackage[ISO]{diffcoeff}
+\usepackage{subcaption}
+\usepackage{floatflt}
+\usepackage{listings}
+\usepackage{pgfplots}
+\usepackage{gnuplot-lua-tikz}
+\usepackage{tcolorbox}
+\usepackage{xparse}
+% \usepackage{layout}
+
+% パッケージの初期設定
+\usetikzlibrary{graphs,cd,datavisualization.formats.functions}
+\tcbuselibrary{xparse,listings,breakable,skins,theorems}
+\pgfplotsset{width=7cm,compat=1.18}
+\makeindex
+
+% メタデータ
+\title{\TeX/\LaTeX ことはじめ}
+\author{cuttlefish\_math}
+\date{\today}
+
+% レイアウト操作
+\setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
+\renewcommand{\cftchapfont}{\sffamily\bfseries}
+\setlength{\cftchapnumwidth}{4\zw}
+\geometry{b5paper,hmargin=15mm,vmargin=20mm}
+\newcommand{\idxdelim}{\hfill}
+\newcommand{\makeidxhead}[1]{{\vbox{\hbox to \linewidth{\sffamily\bfseries #1\hfill}}}\nopagebreak}
+
+\begin{comment}
+  jlreq.clsにおいてbaselikeskipは1.7*jafontsizeである．
+  B4用紙は182*257mmであり，余白を上下20mmずつとりたいから
+  (number_of_lines) = [(257 - 40) / (2.82 * 1.7)] = 45
+  とする．
+
+  書籍版においてはノドは15.75mm，小口は15mmにしたいから
+  (line_length) = 182 - 30.75 = 151.25mm
+  とする．
+
+  電子版においては左右15mmの余白をgeometryパッケージで指定する．
+\end{comment}
+
+% 参照
+\crefname{theorem}{定理}{定理}
+\crefname{definition}{定義}{定義}
+\crefname{example}{例}{例}
+\crefname{lemma}{補題}{補題}
+\crefname{subsection}{節}{節}
+\crefname{table}{表}{表}
+\crefname{figure}{図}{図}
+
+% ソースコード
+\definecolor{codeback}{HTML}{EEEEEE}
+
+\lstdefinestyle{codeblock}{%
+  aboveskip=0pt,
+  belowskip=0pt,
+  breaklines=true,
+  breakindent=10pt,
+  basicstyle=\ttfamily\small}
+
+\newtcblisting{codeblock}{%
+  listing only,
+  listing options={style=codeblock},
+  enhanced,
+  breakable,
+  colback=codeback,
+  arc=0mm,
+  boxrule=0mm,
+  top=2mm,
+  bottom=2mm,
+  left=2mm,
+  right=2mm,
+  frame hidden}
+
+\NewDocumentCommand{\inlinecode}{O{!} v}{\eghostguarded{}\lstinline[breaklines=true,basicstyle=\ttfamily]#1#2#1\eghostguarded{}}
+
+% 定理環境
+\theoremstyle{definition}
+
+\tcbset{%
+  myframe/.style={%
+    colframe=gray,
+    boxrule=0.2mm,
+    arc=0mm,
+    boxsep=0mm,
+    left=0mm,
+    right=0mm,
+    top=0mm,
+    bottom=0mm},
+  mystyle/.style={%
+    enhanced,
+    label type={#1},
+    theorem style=plain,
+    fonttitle=\bfseries,
+    colframe=black,
+    colback=white,
+    colbacktitle=white,
+    coltitle=black,
+    enlarge top by=0.6\zh,
+    arc=0mm,
+    boxrule=0.2mm}}
+
+\newtcbtheorem[number within=section]{theorem}{定理}{mystyle={theorem}}{theorem}
+\newtcbtheorem[number within=section]{definition}{定義}{mystyle={definition}}{definition}
+\newtcbtheorem[number within=section]{lemma}{補題}{mystyle={lemma}}{lemma}
+\newtheorem{example}{例}[section]
+
+% グラフ
+\tikzset{%
+  hv path/.style={to path={-| (\tikztotarget)}},
+  vh path/.style={to path={|- (\tikztotarget)}},
+  terminal/.style={%
+    rectangle,
+    minimum size=6mm,
+    draw=black!50},
+  mapping/.style={%
+    rectangle,
+    minimum size=6mm}}
+
+% マクロ
+\newcommand{\eTeX}{\hologo{eTeX}}
+\newcommand{\pTeX}{p\TeX}
+\newcommand{\pLaTeX}{p\LaTeX}
+\newcommand{\upTeX}{up\TeX}
+\newcommand{\upLaTeX}{up\LaTeX}
+\newcommand{\pdfTeX}{\hologo{pdfTeX}}
+\newcommand{\pdfLaTeX}{\hologo{pdfLaTeX}}
+\newcommand{\XeTeX}{\hologo{XeTeX}}
+\newcommand{\XeLaTeX}{\hologo{XeLaTeX}}
+\newcommand{\LuaTeX}{\hologo{LuaTeX}}
+\newcommand{\LuaLaTeX}{\hologo{LuaLaTeX}}
+
+\providecommand\given{}
+\newcommand\SetSymbol[1][]{\nonscript\:#1\vert\allowbreak\nonscript\:\mathopen{}}
+\DeclarePairedDelimiterX\Set[1]\{\}{\renewcommand\given{\SetSymbol[\delimsize]}#1}
+
+\newcommand{\termdef}[2]{{\sffamily\bfseries #1}\index{#2@#1}}
+\newcommand{\literal}[1]{\mathrm{#1}}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\subfile{chapter/in_the_beginning}
+
+\subfile{chapter/computer_and_multimedia/index}
+
+\subfile{chapter/what_is_texlatex/index}
+
+\subfile{chapter/graph/index}
+
+\chapter{フォント}
+この節では処理系を\LuaTeX に限定する．これは，\LuaTeX が日本語組版に対応しており，
+かつフォントを簡単に変えられる処理系だからである．
+
+\LuaTeX において，和文フォントの変更は\inlinecode{luatexja-fontspec}\index{luatexja-fontspec@luatexja-fontspec}パッケージにより行う．
+たとえば，この文書ではプリアンブルに次のように書くことで，ソースコードのフォントを白源\footnote{\url{https://github.com/yuru7/HackGen}}に変更している．
+\begin{codeblock}
+\setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
+\end{codeblock}
+
+
+\chapter{補遺}
+\section{パッケージの相性問題}
+\begin{enumerate}
+  \item cleverefはamsmathの後に読み込まれなければならない
+  \item hyperrefはxcolorの後に読み込まれるとxcolorの色指定を利用できる
+  \item geometryはhyperrefの後に読み込まれなければならない（あるいはgeometryにhyperrefオプションを渡す）  
+  \item hyperrefを読み込んだ場合，namerefは\inlinecode{\begin{document}}の直前に読み込まれる
+\end{enumerate}
+
+これを見ると分かるが，特にhyperrefに関するものが多い．
+
+hyperref
+\begin{quote}
+The environments equation and eqnarray are not supported too well. For example, there might
+be spacing problems (eqnarray isn't recommended anyway, see CTAN:info/l2tabu/, the situation
+for equation is unclear, because nobody is interested in investigating). Consider using the environments that package amsmath provide, e.g. gather for equation. The environment equation can
+even redefined to use gather:
+\begin{codeblock}
+\usepackage{amsmath}
+\let\equation\gather
+\let\endequation\endgather    
+\end{codeblock}
+\end{quote}
+
+\bibliography{index}
+\nocite{*}
+\bibliographystyle{jplain}
+
+\printindex
+
+\end{document}

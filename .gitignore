@@ -1,0 +1,14 @@
+jpbase.ist
+**/*.aux
+**/*.bbl
+**/*.bcf
+**/*.blg
+**/*.gnuplot
+**/*.idx
+**/*.ilg
+**/*.ind
+**/*.listing
+**/*.log
+**/*.out
+**/*.table
+**/*.toc

@@ -1,0 +1,26 @@
+source = ["index.tex"]
+sequence = ["lualatex", "upbibtex", "upmendex"]
+clean_files = [
+  "%B.aux", "%B.bbl", "%B.bcf", "%B-blx.bib", "%B.blg", "%B.fls", "%B.idx",
+  "%B.ilg", "%B.ind", "%B.listing", "%B.log", "%B.out", "%B.run.xml", "%B.toc"
+]
+
+[programs.lualatex]
+command = "lualatex"
+opts = ["-interaction=nonstopmode", "-file-line-error", "-shell-escape"]
+aux_file = "%B.aux"
+aux_empty_size = 9
+
+[programs.upbibtex]
+command = "upbibtex"
+target = "%B.bib"
+args = ["%B"]
+postprocess = "lualatex"
+
+[programs.upmendex]
+command = "upmendex"
+target = "%B.idx"
+opts = ["-s"]
+args = ["jpbase", "%T"]
+generated_target = true
+postprocess = "lualatex"

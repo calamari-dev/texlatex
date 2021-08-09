@@ -1,0 +1,143 @@
+\documentclass[../../index]{subfiles}
+
+\begin{document}
+\chapter{コンピュータとマルチメディア}
+\section{文字コード}
+コンピュータにおいて，テキストを記録するには，テキストを数値の列に変換しなければならない．
+この変換方式のことを\termdef{文字コード}{もじこーど}という．
+文字コードは複数あり，それぞれ利用できる文字や変換方式などが異なる．
+
+\begin{floatingfigure}{5cm}
+  \centering
+  \tcbincludegraphics[myframe,width=5cm]{notepad.png}
+  \caption{Windows 10のメモ帳}
+\end{floatingfigure}
+
+たとえば，最新のWindows 10にあるメモ帳でテキストを保存すると，UTF-8という方式で
+文字列が数値の列に変換される．この他にも，ソフトウェアに応じてASCII，Shift\_JISなど，
+さまざまな文字コードが利用されている．
+
+現在では\termdef{Unicode}{unicode}という文字コードの規格が主流になりつつある．
+先述のUTF-8も，このUnicodeにおいて定義されている．
+この節では文字コードの代表例として，Unicodeについて解説する．
+なお，以下に示す用語は文字コードによっては異なる名前で呼ばれることもあるし，対応する概念が無いこともある．
+
+文字コードが扱える文字の全体集合を\termdef{文字集合}{もじしゅうごう}という．
+文字集合の各要素には固有の非負整数が割り当てられており，
+その対応関係をUnicodeでは\termdef{符号化文字集合}{ふごうかもじしゅうごう}と呼ぶ
+\footnote{対応関係なのに集合？と思うのももっともだが，公式資料には確かに「a mapping from an abstract character repertoire to a set of nonnegative integers」\cite{Whistler2008}とある．}．
+
+符号化文字集合（の像）は，集合\(S=\Set{0_{(16)},\dots,\literal{10FFFF}_{(16)}}\)の真部分集合である．
+\(S\)を\termdef{符号空間}{ふごうくうかん}といい，\(S\)の要素を\termdef{符号位置}{ふごういち}という．
+符号位置は，十六進数の先頭に「U+」を付けて「U+304B」のようにして表される．
+
+符号化文字集合は，数値を並べたときに区切れ目がただ1通りに定まるかどうかを考慮していない．
+そこで，あとから区切れ目が分かるように，符号化文字集合（の像）に属する数値を整数の組\footnote{正確には1バイトの組である．}（\termdef{符号単位}{ふごうたんい}）へと変換する規則が必要になる．
+この規則を\termdef{文字符号化形式}{もじふごうかけいしき}といい，UTF-8，UTF-16，UTF-32の3つが定義されている．
+
+\begin{figure}[htb]
+  \centering
+  \begin{tikzcd}
+    \text{か} \arrow[r,"\text{符号位置に変換}"]
+    &[6\zw] \text{U+304B} \arrow[r,"\text{符号単位に変換}"]
+    &[6\zw] \text{\texttt{E3 81 8B}}
+  \end{tikzcd}
+  \caption{文字の符号単位への変換}
+  \label{figure:character_to_byte_sequence}
+\end{figure}
+
+\cref{table:unicode_code_point}にUnicodeの符号化文字集合を一部抜粋して示す．
+
+\begin{table}[htb]
+  \centering
+  \caption{符号化文字集合の一部}
+  \label{table:unicode_code_point}
+  \begin{tabular}{c|ccccccc} \hline
+    U+   &      0     &      1      &      2     &      3     &      4     &      5     &      6     \\ \hline
+    0020 & \UTF{0020} & \UTF{0021}  & \UTF{0022} & \UTF{0023} & \UTF{0024} & \UTF{0025} & \UTF{0026} \\
+    0030 & \UTF{0030} & \UTF{0031}  & \UTF{0032} & \UTF{0033} & \UTF{0034} & \UTF{0035} & \UTF{0036} \\
+    0040 & \UTF{0040} & \UTF{0041}  & \UTF{0042} & \UTF{0043} & \UTF{0044} & \UTF{0045} & \UTF{0046} \\ \hline
+  \end{tabular}
+\end{table}
+
+例として「M系列」という文字列について考えよう．
+「M系列」の各文字をUnicodeの符号位置に置き換えると次のようになる．
+\begin{codeblock}
+U+004D U+7CFB U+5217
+\end{codeblock}
+
+そして，これらをUTF-8で符号単位の列に変換すると次のようになる
+\footnote{厳密には，UTF-16とUTF-32では符号単位の列をバイト列に変換する方法（\termdef{文字符号化スキーム}{もじふごうかすきーむ}）も問題になる．UTF-8では，符号単位を並べたものをそのままバイト列とする．}．
+「\inlinecode{4D}」がU+004D，「\inlinecode{E7 B3 BB}」がU+7CFB，「\inlinecode{E5 88 97}」がU+5217にそれぞれ対応する．
+\begin{codeblock}
+4D E7 B3 BB E5 88 97
+\end{codeblock}
+
+\begin{comment}
+\section{日本語\TeX と文字コード}
+日本語を使える\TeX 処理系は複数ある．\pTeX は
+
+\pTeX は\termdef{JIS X 0208}{jisx0208}に含まれる文字に対応する．
+
+\begin{enumerate}
+  \item \pTeX はJIS X 0208に含まれる文字に対応する
+  \item \upTeX ，\XeTeX ，\pdfTeX ，および\LuaTeX はUnicodeに含まれる文字に対応する
+\end{enumerate}
+\end{comment}
+
+\section{ラスタ形式とベクタ形式}
+コンピュータで画像を記録する方法は，\termdef{ラスタ形式}{らすたけいしき}と\termdef{ベクタ形式}{べくたけいしき}の2つに大別される．
+ラスタ形式は，画像を単色の要素（\termdef{画素}{がそ}）を集めたものとして記録する方法である．
+これに対し，ベクタ形式は画像を図形の集まりとして記録する方法である．
+
+ベクタ形式に比べ，ラスタ形式は拡大・縮小の影響を受けやすい．ラスタ形式の画像を拡大したときの様子を\cref{figure:raster_scaling}に示す．
+
+\begin{figure}[htb]
+  \begin{subfigure}{0.5\linewidth}
+    \centering
+    \tcbincludegraphics[myframe,width=5cm]{graph.png}
+    \caption{画像全体}
+  \end{subfigure}%
+  \begin{subfigure}{0.5\linewidth}
+    \centering
+    \tcbincludegraphics[myframe,width=5cm]{raster_scaling.png}
+    \caption{中央付近を拡大}
+  \end{subfigure}
+  \caption{ラスタ形式の画像を拡大したときの様子}
+  \label{figure:raster_scaling}
+\end{figure}
+
+これに対し，ベクタ形式の画像は拡大しても\cref{figure:raster_scaling}のようにならない．
+これは，ベクタ形式では拡大・縮小に応じて図形を描画しなおせるからである．
+ベクタ形式の画像を拡大したときの様子を\cref{figure:vector_scaling}に示す．
+
+\begin{figure}[htb]
+  \begin{subfigure}{0.5\linewidth}
+    \centering
+    \tcbincludegraphics[myframe,width=5cm]{graph.png}
+    \caption{画像全体}
+  \end{subfigure}%
+  \begin{subfigure}{0.5\linewidth}
+    \centering
+    \tcbincludegraphics[myframe,width=5cm]{vector_scaling.png}
+    \caption{中央付近を拡大}
+  \end{subfigure}
+  \caption{ベクタ形式の画像を拡大したときの様子}
+  \label{figure:vector_scaling}
+\end{figure}
+
+\section{補遺}
+\subsection{文字化けの仕組み}
+\begin{floatingfigure}{5cm}
+  \centering
+  \tcbincludegraphics[myframe,width=5cm]{mojibake.png}
+  \caption{文字化けしたテキスト}
+  \label{figure:mojibake}
+\end{floatingfigure}
+
+多くの場合，文字化けはテキストの文字コードをソフトウェアが誤判定したときに発生する．
+たとえば，\cref{figure:mojibake}ではUTF-8で作成したテキストをShift\_JISで開いてしまっている．
+
+文字化けを直すには，適切な文字コードでテキストを開きなおせばよい．
+Visual Studio Code\footnote{\url{https://code.visualstudio.com}}などのテキストエディタは，ユーザが文字コードを選択しなおす機能を備えている．
+\end{document}

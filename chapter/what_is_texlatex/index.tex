@@ -1,0 +1,65 @@
+\documentclass[../../index]{subfiles}
+
+\begin{document}
+\chapter{\TeX /\LaTeX とは}
+\section{\TeX とは}
+\TeX とはDonald Knuthにより開発された組版システムである．
+
+\section{\TeX 処理系}
+\upTeX は内部コードをUnicodeにした\pTeX の拡張である．
+
+\begin{comment}
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[graphs/every graph/.style={edges=rounded corners}]
+    \matrix[row sep=4mm,column sep=7mm] {
+        % Row 1:
+        &
+        & \node (LuaTeX) [mapping] {Lua\TeX};
+        &
+        & \\
+        % Row 2:
+        \node (TeX) [terminal] {.tex};
+        & \node (upTeX) [mapping] {up\TeX};
+        & \node (DVI) [terminal] {.dvi};
+        & \node (dvipdfmx) [mapping] {dvipdfmx};
+        & \node (PDF) [terminal] {.pdf}; \\
+        % Row 3:
+        &
+        &
+        & \node (PNG) [terminal] {.png};
+        & \\
+        % Row 4:
+        &
+        &
+        & \node (dvisvgm) [mapping] {dvisvgm};
+        & \node (SVG) [terminal] {.svg}; \\
+     };
+     \graph [use existing nodes] {
+        TeX -- upTeX -> DVI -- dvipdfmx -> PDF;
+        TeX --[vh path] LuaTeX ->[hv path] PDF;
+        DVI --[vh path] dvisvgm -> SVG;
+        PNG -- dvipdfmx;
+     };
+   \end{tikzpicture}  
+  \caption{参考文献を\TeX で管理しない場合のフローチャート}
+\end{figure}
+\end{comment}
+
+\section{\LaTeX とは}
+\LaTeX とはLeslie Lamportにより開発された\TeX のマクロである．
+
+\section{補遺}
+\subsection{\eTeX について}
+実は，\upLaTeX を起動したときに実行されるのは，元々の\upTeX とは少し異なる\TeX 処理系である．
+
+コマンドラインで\inlinecode{uplatex}を実行すると，次のメッセージが出力される．
+\begin{codeblock}
+This is e-upTeX, Version 3.141592653-p3.9.0-u1.27-210218-2.6 (utf8.uptex) (TeX Live 2021/W32TeX) (preloaded format=uplatex)
+ restricted \write18 enabled.
+**
+\end{codeblock}
+
+本書では以降，\eTeX 拡張の有無についてはいちいち断らないことにする．
+すなわち，\upTeX と言ったら\(\varepsilon\)-\upTeX を指すものとする．
+\end{document}
