@@ -1,45 +1,41 @@
 \documentclass[report,paper=b5,fontsize=13Q]{jlreq}
-% \documentclass[report,paper=b5,gutter=16mm,head_space=20mm,number_of_lines=45,line_length=150mm,fontsize=13Q]{jlreq}
 
-% LuaTeX
 \usepackage{luatexja-otf}
 \usepackage[sourcehan-jp,no-math,match,deluxe,jfm_yoko=jlreq]{luatexja-preset}
 
-% 基本パッケージ
 \usepackage{graphicx}
 \usepackage[svgnames]{xcolor}
 \usepackage{float}
 \usepackage{mathtools,amssymb,amsthm}
 \usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
 \usepackage{cleveref}
-\usepackage{enumitem}
-\usepackage{comment}
-
-% 組版処理パッケージ
-\usepackage{geometry}
-\usepackage{tocloft}
-\usepackage{bxghost}
-\usepackage{mathpunctspace}
-
-% 追加パッケージ
 \usepackage{makeidx}
 \usepackage{subfiles}
-\usepackage{hologo}
-\usepackage{lipsum}
-\usepackage[ISO]{diffcoeff}
-\usepackage{subcaption}
+
+\usepackage{geometry}
+\usepackage{tocloft}
 \usepackage{floatflt}
+\usepackage{subcaption}
+\usepackage{enumitem}
+
 \usepackage{listings}
 \usepackage{pgfplots}
 \usepackage{gnuplot-lua-tikz}
 \usepackage{tcolorbox}
 \usepackage{xparse}
-% \usepackage{layout}
+\usepackage{bxghost}
+\usepackage{mathpunctspace}
+\usepackage{bxtexlogo}
+\usepackage{lipsum}
+\usepackage[ISO]{diffcoeff}
+\usepackage{comment}
 
 % パッケージの初期設定
 \usetikzlibrary{graphs,cd,datavisualization.formats.functions}
 \tcbuselibrary{xparse,listings,breakable,skins,theorems}
 \pgfplotsset{width=7cm,compat=1.18}
+\bxtexlogoimport{*}
+\bxtexlogoimport{SATySFi}
 \makeindex
 
 % メタデータ
@@ -48,32 +44,23 @@
 \date{\today}
 
 % レイアウト操作
-\setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
-\renewcommand{\cftchapfont}{\sffamily\bfseries}
-\setlength{\cftchapnumwidth}{4\zw}
 \geometry{b5paper,hmargin=15mm,vmargin=20mm}
+\setsansjfont{Source Han Sans JP Regular}[YokoFeatures={JFM=jlreq},BoldFont={Source Han Sans JP Medium}]
+\setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
+\renewcommand{\cfttoctitlefont}{\sffamily\Huge\bfseries}
+\renewcommand{\cftchapfont}{\sffamily\bfseries}
+\renewcommand{\cftchappagefont}{\sffamily\bfseries}
+\setlength{\cftchapnumwidth}{4\zw}
 \newcommand{\idxdelim}{\hfill}
 \newcommand{\makeidxhead}[1]{{\vbox{\hbox to \linewidth{\sffamily\bfseries #1\hfill}}}\nopagebreak}
-
-\begin{comment}
-  jlreq.clsにおいてbaselikeskipは1.7*jafontsizeである．
-  B4用紙は182*257mmであり，余白を上下20mmずつとりたいから
-  (number_of_lines) = [(257 - 40) / (2.82 * 1.7)] = 45
-  とする．
-
-  書籍版においてはノドは15.75mm，小口は15mmにしたいから
-  (line_length) = 182 - 30.75 = 151.25mm
-  とする．
-
-  電子版においては左右15mmの余白をgeometryパッケージで指定する．
-\end{comment}
 
 % 参照
 \crefname{theorem}{定理}{定理}
 \crefname{definition}{定義}{定義}
 \crefname{example}{例}{例}
 \crefname{lemma}{補題}{補題}
-\crefname{subsection}{節}{節}
+\crefname{section}{節}{節}
+\crefname{subsection}{小節}{小節}
 \crefname{table}{表}{表}
 \crefname{figure}{図}{図}
 
@@ -146,24 +133,16 @@
     rectangle,
     minimum size=6mm}}
 
-% マクロ
-\newcommand{\eTeX}{\hologo{eTeX}}
-\newcommand{\pTeX}{p\TeX}
-\newcommand{\pLaTeX}{p\LaTeX}
-\newcommand{\upTeX}{up\TeX}
-\newcommand{\upLaTeX}{up\LaTeX}
-\newcommand{\pdfTeX}{\hologo{pdfTeX}}
-\newcommand{\pdfLaTeX}{\hologo{pdfLaTeX}}
-\newcommand{\XeTeX}{\hologo{XeTeX}}
-\newcommand{\XeLaTeX}{\hologo{XeLaTeX}}
-\newcommand{\LuaTeX}{\hologo{LuaTeX}}
-\newcommand{\LuaLaTeX}{\hologo{LuaLaTeX}}
+% マクロ（文書構造）
+\newcommand{\smallfiguresize}{5cm}
+\newcommand{\figuresize}{7cm}
+\newcommand{\termdef}[1]{{\sffamily\bfseries #1}}
 
+% マクロ（数式）
 \providecommand\given{}
 \newcommand\SetSymbol[1][]{\nonscript\:#1\vert\allowbreak\nonscript\:\mathopen{}}
 \DeclarePairedDelimiterX\Set[1]\{\}{\renewcommand\given{\SetSymbol[\delimsize]}#1}
 
-\newcommand{\termdef}[2]{{\sffamily\bfseries #1}\index{#2@#1}}
 \newcommand{\literal}[1]{\mathrm{#1}}
 
 \begin{document}
@@ -187,7 +166,6 @@
 \begin{codeblock}
 \setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
 \end{codeblock}
-
 
 \chapter{補遺}
 \section{パッケージの相性問題}
@@ -213,8 +191,8 @@ even redefined to use gather:
 \end{codeblock}
 \end{quote}
 
+\clearpage
 \bibliography{index}
-\nocite{*}
 \bibliographystyle{jplain}
 
 \printindex

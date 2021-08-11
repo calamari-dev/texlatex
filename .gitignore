@@ -1,4 +1,7 @@
 jpbase.ist
+chapter/**/*.pdf
+
+# 中間ファイル
 **/*.aux
 **/*.bbl
 **/*.bcf

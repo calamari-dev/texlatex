@@ -2,54 +2,30 @@
 
 \begin{document}
 \chapter{\TeX /\LaTeX とは}
-\section{\TeX とは}
-\TeX とはDonald Knuthにより開発された組版システムである．
+\section{\TeX と\LaTeX}
+\termdef{\TeX}\index{tex@\TeX}とは，Donald Knuthにより開発された組版システムである．
+\termdef{\LaTeX}\index{latex@\LaTeX}とは，Leslie Lamportにより開発された\TeX のマクロである．
 
-\section{\TeX 処理系}
-\upTeX は内部コードをUnicodeにした\pTeX の拡張である．
+\begin{codeblock}
+Hello, plain \TeX !
+\bye
+\end{codeblock}
 
-\begin{comment}
-\begin{figure}
-  \centering
-  \begin{tikzpicture}[graphs/every graph/.style={edges=rounded corners}]
-    \matrix[row sep=4mm,column sep=7mm] {
-        % Row 1:
-        &
-        & \node (LuaTeX) [mapping] {Lua\TeX};
-        &
-        & \\
-        % Row 2:
-        \node (TeX) [terminal] {.tex};
-        & \node (upTeX) [mapping] {up\TeX};
-        & \node (DVI) [terminal] {.dvi};
-        & \node (dvipdfmx) [mapping] {dvipdfmx};
-        & \node (PDF) [terminal] {.pdf}; \\
-        % Row 3:
-        &
-        &
-        & \node (PNG) [terminal] {.png};
-        & \\
-        % Row 4:
-        &
-        &
-        & \node (dvisvgm) [mapping] {dvisvgm};
-        & \node (SVG) [terminal] {.svg}; \\
-     };
-     \graph [use existing nodes] {
-        TeX -- upTeX -> DVI -- dvipdfmx -> PDF;
-        TeX --[vh path] LuaTeX ->[hv path] PDF;
-        DVI --[vh path] dvisvgm -> SVG;
-        PNG -- dvipdfmx;
-     };
-   \end{tikzpicture}  
-  \caption{参考文献を\TeX で管理しない場合のフローチャート}
-\end{figure}
-\end{comment}
+この他にも，\ConTeXt というマクロパッケージがあったりする．
 
-\section{\LaTeX とは}
-\LaTeX とはLeslie Lamportにより開発された\TeX のマクロである．
+\LaTeXe の話も．
+
+\section{\TeX と和文}
+\termdef{\pTeX}\index{ptex@\pTeX}はJIS なんとかの文字集合に対応した\TeX 処理系である．
+\termdef{\upTeX}\index{uptex@\upTeX}は内部コードをUnicodeにした\pTeX の拡張である．
+\termdef{\LuaTeX}\index{luatex@\LuaTeX}は\TeX 処理系を汎用プログラミング言語である\termdef{Lua}\index{lua@Lua}によって
+拡張できるようにした\TeX 処理系である．
 
 \section{補遺}
+\subsection{\SATySFi について}
+\termdef{\SATySFi}\index{satysfi@\SATySFi}は，和文に対応した非\TeX 系の組版システムである．
+\SATySFi を利用するという選択肢もある．
+
 \subsection{\eTeX について}
 実は，\upLaTeX を起動したときに実行されるのは，元々の\upTeX とは少し異なる\TeX 処理系である．
 
@@ -61,5 +37,32 @@ This is e-upTeX, Version 3.141592653-p3.9.0-u1.27-210218-2.6 (utf8.uptex) (TeX L
 \end{codeblock}
 
 本書では以降，\eTeX 拡張の有無についてはいちいち断らないことにする．
-すなわち，\upTeX と言ったら\(\varepsilon\)-\upTeX を指すものとする．
+すなわち，\upTeX と言ったら\eupTeX を指すものとする．
+
+\subsection{他の命令の引数にできない命令}
+\TeX の仕様により，\inlinecode{\verb}など一部の命令は，他の命令の引数にできない．
+たとえば，次の\LaTeX ソースは\inlinecode{\verb}が
+\inlinecode{\footnote}の引数になっているので不正である．
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\begin{document}
+\TeX のロゴ（\emph{\verb!\TeX!で出力できる}）は，Donald Knuthがこう表記するように求めている．
+\end{document}
+\end{codeblock}
+
+実際，\inlinecode{example.tex}を上記の内容で作成し，
+次のコマンドを実行すると「\inlinecode{LaTeX Error: \verb illegal in command argument.}」というエラーが出力される．
+\begin{codeblock}
+> uplatex -kanji=utf8 -no-guess-input-enc example
+\end{codeblock}
+
+この問題を解決する手っ取り早い方法は，\inlinecode{\verb}を使わないことである．
+すなわち，\textbackslash を\inlinecode{\textbackslash}に置き換えればよい．
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\begin{document}
+\TeX のロゴ（\emph{\texttt{\textbackslash TeX}で出力できる}）は，Donald Knuthがこう表記するように求めている．
+\end{document}
+\end{codeblock}
+
 \end{document}
