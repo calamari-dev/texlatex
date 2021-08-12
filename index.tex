@@ -1,6 +1,7 @@
 \documentclass[report,paper=b5,fontsize=13Q]{jlreq}
 
 \usepackage{luatexja-otf}
+\usepackage{lltjext}
 \usepackage[sourcehan-jp,no-math,match,deluxe,jfm_yoko=jlreq]{luatexja-preset}
 
 \usepackage{graphicx}
@@ -17,6 +18,7 @@
 \usepackage{floatflt}
 \usepackage{subcaption}
 \usepackage{enumitem}
+\usepackage{pdfpages}
 
 \usepackage{listings}
 \usepackage{pgfplots}
@@ -34,8 +36,7 @@
 \usetikzlibrary{graphs,cd,datavisualization.formats.functions}
 \tcbuselibrary{xparse,listings,breakable,skins,theorems}
 \pgfplotsset{width=7cm,compat=1.18}
-\bxtexlogoimport{*}
-\bxtexlogoimport{SATySFi}
+\bxtexlogoimport{*,SATySFi}
 \makeindex
 
 % メタデータ
@@ -45,6 +46,7 @@
 
 % レイアウト操作
 \geometry{b5paper,hmargin=15mm,vmargin=20mm}
+\newjfontfamily{\titlefamily}{HannariMincho Regular}[YokoFeatures={JFM=jlreq}]
 \setsansjfont{Source Han Sans JP Regular}[YokoFeatures={JFM=jlreq},BoldFont={Source Han Sans JP Medium}]
 \setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
 \renewcommand{\cfttoctitlefont}{\sffamily\Huge\bfseries}
@@ -146,7 +148,7 @@
 \newcommand{\literal}[1]{\mathrm{#1}}
 
 \begin{document}
-\maketitle
+\includepdf{titlepage.pdf}
 \tableofcontents
 
 \subfile{chapter/in_the_beginning}
@@ -196,5 +198,10 @@ even redefined to use gather:
 \bibliographystyle{jplain}
 
 \printindex
+
+\chapter*{更新履歴}
+\begin{description}
+  \item[2021/08/11] 第1版公開
+\end{description}
 
 \end{document}
