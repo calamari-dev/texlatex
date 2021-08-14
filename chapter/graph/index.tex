@@ -2,67 +2,16 @@
 
 \begin{document}
 \chapter{グラフの作成}
-本稿では，次の3つの方法を紹介する．
+本書では，次の2つの方法を紹介する．
 \begin{enumerate}
   \item PGFPlotsによる方法
   \item GNUPlotによる方法
-  \item TikZのdatavisualizationライブラリによる方法
 \end{enumerate}
 
-\section{datavisualization}
-TikZ
+なお，これらの他にも\TikZ のdatavisualizationライブラリによる方法もある．
+また，多くの数学ソフトウェアは\LaTeXe に対応した出力，あるいはPDF出力を備えている．
 
-\section{GNUPlotによる方法}
-あああ\footnote{\texttt{set term tikz}としている資料もあるが，これは\texttt{set terminal lua tikz}の省略形である．}．
-
-\begin{figure}[tb]
-  \begin{subfigure}{0.5\linewidth}
-    \centering
-    \begin{tikzpicture}
-      \begin{axis}[width=6.5cm]
-        \addplot [smooth,samples=100,domain=-pi:pi] {cos(deg(x))};
-        \addlegendentry{$\cos(x)$};
-      \end{axis}
-    \end{tikzpicture}
-    \caption*{PGFPlots}
-  \end{subfigure}%
-  \begin{subfigure}{0.5\linewidth}
-    \centering
-    \input{gnuplot.tex}
-    \caption*{gnuplot-lua-tikz}
-  \end{subfigure}
-
-  \bigskip
-  \begin{subfigure}{0.5\linewidth}
-    \centering
-    \begin{tikzpicture}
-      \begin{axis}[width=6.5cm]
-        \addplot [smooth,samples=100,mark=none,domain=-pi:pi] function [id=cos] {cos(x)};
-        \addlegendentry{$\cos(x)$};
-      \end{axis}
-    \end{tikzpicture}
-    \caption*{GNUPlot on PGFPlots}
-  \end{subfigure}%
-  \begin{subfigure}{0.5\linewidth}
-    \centering
-    \begin{tikzpicture}
-      \datavisualization [
-        scientific axes,
-        visualize as smooth line/.list={cosine},
-        x axis={length=4.5cm},
-        y axis={length=4cm},
-        legend=north east inside,
-        cosine={label in legend={text={$\cos(x)$}}}]
-      data [set=cosine, format=function] {
-        var x : interval [-pi:pi] samples 100;
-        func y = cos(deg(\value x));
-      };
-    \end{tikzpicture}
-    \caption*{datavisualization}
-  \end{subfigure}
-  \caption{グラフ描画の比較}
-\end{figure}
-
+\section{PGFPlotsによるグラフ作成}
 \begin{codeblock}
 \begin{tikzpicture}
   \begin{axis}[width=7cm]
@@ -72,9 +21,19 @@ TikZ
 \end{tikzpicture}
 \end{codeblock}
 
-\begin{codeblock}
-\input{gnuplot.tex}
-\end{codeblock}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=7cm]
+      \addplot [smooth,samples=100,domain=-pi:pi] {cos(deg(x))};
+      \addlegendentry{$\cos(x)$};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{PGFPlotsによる\(\cos(x)\)のグラフ}
+\end{figure}
+
+\section{GNUPlotによるグラフ作成}
+あああ\footnote{\texttt{set term tikz}としている資料もあるが，これは\texttt{set terminal lua tikz}の省略形である．}．
 
 \begin{codeblock}
 gnuplot> set terminal lua tikz size 7cm,5cm
@@ -84,30 +43,17 @@ gnuplot> plot cos(x) linetype rgb "black" title '$\cos(x)$'
 gnuplot> exit
 \end{codeblock}
 
-\begin{codeblock}
-\begin{tikzpicture}
-  \begin{axis}[width=7cm]
-    \addplot [smooth,samples=100,mark=none,domain=-pi:pi] function [id=cos] {cos(x)};
-    \addlegendentry{$\cos(x)$};
-  \end{axis}
-\end{tikzpicture}
-\end{codeblock}
+\inlinecode{\usepackage{gnuplot-lua-tikz}}を追加
 
 \begin{codeblock}
-\begin{tikzpicture}
-  \datavisualization [
-    scientific axes,
-    visualize as smooth line/.list={cosine},
-    x axis={length=5cm},
-    y axis={length=4cm},
-    legend=north east inside,
-    cosine={label in legend={text={$\cos(x)$}}}]
-  data [set=cosine, format=function] {
-    var x : interval [-pi:pi] samples 100;
-    func y = cos(deg(\value x));
-  };
-\end{tikzpicture}
+\input{gnuplot.tex}
 \end{codeblock}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics{gnuplot.pdf}
+  \caption{GNUPlotによる\(\cos(x)\)のグラフ}
+\end{figure}
 
 \section{その他のグラフ}
 3Dグラフなども同様の要領で作成できる．以下にPGFPlotsを利用した例を示す．
@@ -120,7 +66,7 @@ gnuplot> exit
 \end{tikzpicture}
 \end{codeblock}
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
   \centering
   \begin{tikzpicture}
     \begin{axis}[width=7cm,colormap/blackwhite]
@@ -132,18 +78,8 @@ gnuplot> exit
 
 \section{補遺}
 \subsection{グラフ描画の精度}
-PGFPlotsのRevision 1.18 (2021/05/08) p.54を引用する．
-
-\begin{quotation}
-  \textbf{About the precision and number range:} Starting with version 1.2, \inlinecode{\addplot expression} uses
-  a floating point unit. The FPU provides the full data range of scientific computing with a relative
-  precision between $10^{-4}$ and $10^{-6}$. The \inlinecode{/pgf/fpu} key provides some more details.
-
-  Note that pgfplots makes use of lualatex's features: if you use lualatex instead of pdflatex,
-  pgfplots will use lua's math engine which is both faster and more accurate (\inlinecode{compat=1.12} or higher).
-\end{quotation}
-
-つまり，処理系が\LuaLaTeX であり，\inlinecode{compat}に1.12以上のバージョンが指定されていれば，
-PGFPlotsはLuaの数学エンジンを利用して計算を行う．これは\TeX 上の実装より高速かつ正確である．
+通常，PGFPlotsは\TeX 上で実装された浮動小数点数演算を利用して，関数のグラフを計算する．
+しかし，処理系が\LuaLaTeX であり，\inlinecode{compat}に1.12以上のバージョンが指定されていれば，
+PGFPlotsはLuaの数学エンジンを利用して計算を行う．これは\TeX 上の実装より高速かつ正確である\cite[p.54]{christian2021}．
 
 \end{document}

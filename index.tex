@@ -1,7 +1,6 @@
 \documentclass[report,paper=b5,fontsize=13Q]{jlreq}
 
 \usepackage{luatexja-otf}
-\usepackage{lltjext}
 \usepackage[sourcehan-jp,no-math,match,deluxe,jfm_yoko=jlreq]{luatexja-preset}
 
 \usepackage{graphicx}
@@ -22,7 +21,6 @@
 
 \usepackage{listings}
 \usepackage{pgfplots}
-\usepackage{gnuplot-lua-tikz}
 \usepackage{tcolorbox}
 \usepackage{xparse}
 \usepackage{bxghost}
@@ -141,9 +139,7 @@
 
 % マクロ（数式）
 \providecommand\given{}
-\newcommand\SetSymbol[1][]{\nonscript\:#1\vert\allowbreak\nonscript\:\mathopen{}}
-\DeclarePairedDelimiterX\Set[1]\{\}{\renewcommand\given{\SetSymbol[\delimsize]}#1}
-
+\DeclarePairedDelimiterX{\Set}[1]{\lbrace}{\rbrace}{\renewcommand\given{\nonscript\:\delimsize\vert\allowbreak\nonscript\:\mathopen{}}#1}
 \newcommand{\literal}[1]{\mathrm{#1}}
 
 \begin{document}
@@ -180,7 +176,7 @@
 これを見ると分かるが，特にhyperrefに関するものが多い．
 
 hyperref
-\begin{quote}
+\begin{quotation}
 The environments equation and eqnarray are not supported too well. For example, there might
 be spacing problems (eqnarray isn't recommended anyway, see CTAN:info/l2tabu/, the situation
 for equation is unclear, because nobody is interested in investigating). Consider using the environments that package amsmath provide, e.g. gather for equation. The environment equation can
@@ -190,17 +186,12 @@ even redefined to use gather:
 \let\equation\gather
 \let\endequation\endgather    
 \end{codeblock}
-\end{quote}
+\end{quotation}
 
 \clearpage
 \bibliography{index}
 \bibliographystyle{jplain}
 
 \printindex
-
-\chapter*{更新履歴}
-\begin{description}
-  \item[2021/08/11] 第1版公開
-\end{description}
 
 \end{document}
