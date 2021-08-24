@@ -146,7 +146,7 @@ makeindexについてはupmendex\index{upmendex@upmendex}が，和文とUnicode�
 公式サイト（\url{http://www.gnuplot.info/}）からダウンロードできる．
 こちらも，利用方法は公式サイトに詳しく記されているので，\cref{figure:gnuplot}に実例を示すにとどめる．
 
-まず，\LaTeX 文書があるディレクトリに移動する．
+まず，\LaTeX ソースがあるディレクトリに移動する．
 その後，コマンドラインでGNUPlotを起動し，以下のように入力する
 \footnote{1行目を\texttt{set term tikz}としている資料もあるが，これは\texttt{set terminal lua tikz}の省略形である．}．
 
@@ -160,7 +160,7 @@ gnuplot> exit
 
 すると，カレントディレクトリにいくつかのファイルが出力される．
 プリアンブルに\inlinecode{\usepackage{gnuplot-lua-tikz}}を追加し，
-\LaTeX 文書に次の記述を加える．すると，\cref{figure:gnuplot}のグラフが得られる．
+\LaTeX ソースに次の記述を加える．すると，\cref{figure:gnuplot}のグラフが得られる．
 
 \begin{codeblock}
 \begin{figure}[htbp]
