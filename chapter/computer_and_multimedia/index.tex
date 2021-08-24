@@ -2,6 +2,9 @@
 
 \begin{document}
 \chapter{コンピュータとマルチメディア}
+この章では，コンピュータで文字・画像を扱うにあたっての基礎知識を解説する．
+また，他者が製作した文書・画像を利用するときに重要となる，ライセンスについても説明する．
+
 \section{文字コード}
 コンピュータにおいて，テキストを記録するには，テキストを数値の列に変換しなければならない．
 この変換方式のことを\termdef{文字コード}\index{もじこーど@文字コード}という．
@@ -25,7 +28,7 @@
 文字コードが扱える文字の全体集合を\termdef{文字集合}\index{もじしゅうごう@文字集合}という．
 文字集合の各要素には固有の非負整数が割り当てられており，
 その対応関係をUnicodeでは\termdef{符号化文字集合}\index{ふごうかもじしゅうごう@符号化文字集合}と呼ぶ
-\footnote{対応関係なのに集合？と思うのももっともだが，公式資料には確かに「a mapping from an abstract character repertoire to a set of nonnegative integers」\cite{Whistler2008}とある．}．
+\footnote{対応関係なのに集合？　と思うのももっともだが，公式資料には確かに「a mapping from an abstract character repertoire to a set of nonnegative integers」\cite{Whistler2008}とある．}．
 
 符号化文字集合（の像）は，集合\(S=\Set{0_{(16)},\dots,\literal{10FFFF}_{(16)}}\)の真部分集合である．
 \(S\)を\termdef{符号空間}\index{ふごうくうかん@符号空間}といい，\(S\)の要素を\termdef{符号位置}\index{ふごういち@符号位置}という．
@@ -161,6 +164,15 @@ U+004D U+7CFB U+5217
   \label{figure:image_compression}
 \end{figure}
 
+\section{ライセンス}
+通常，製作者は自身の製作物に関して知的財産権を持つ．
+したがって，他者の製作物を利用するとき，普通は製作者に対して許可をとる必要がある\footnote{適正な範囲での引用など，例外はある．\cite{bunka}にこうした例外が列記されている．}．
+しかし，製作物の\termdef{ライセンス}\index{らいせんす@ライセンス}が明記されていれば，
+利用者はライセンスと法律の範囲内で自由に製作物を利用できる（もちろん，良識のない利用は慎むべきである）．
+
+たとえば，本書は\href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja}{CC BY-NC-ND 4.0}というライセンスの下で配布されている．
+したがって，読者は自由に本書を再配布できる．しかし，本書を改変した場合は再配布できないなど，いくつかの制約が課される．
+
 \section{補遺}
 \subsection{文字化けの仕組み}
 \begin{floatingfigure}{\smallfiguresize}
@@ -174,7 +186,7 @@ U+004D U+7CFB U+5217
 たとえば，\cref{figure:mojibake}ではUTF-8で作成したテキストをShift\_JISで開いてしまっている．
 
 文字化けを直すには，適切な文字コードを指定してテキストを開きなおせばよい．
-Visual Studio Code\footnote{\url{https://code.visualstudio.com}}などのテキストエディタは，ユーザが文字コードを選択しなおす機能を備えている．
+Visual Studio Code\index{visualstudiocode@Visual Studio Code}\footnote{\url{https://code.visualstudio.com}}などのテキストエディタは，ユーザが文字コードを選択しなおす機能を備えている．
 
 また，テキストをUTF-8で符号化したにもかかわらず，テキストエディタが文字コードをASCIIと判定する場合がある．
 これは，UTF-8とASCIIの仕様には共通する部分があるので，

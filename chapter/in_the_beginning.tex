@@ -1,33 +1,17 @@
 \documentclass[../index]{subfiles}
 
 \begin{document}
-\chapter{はじめに}
-\TeX /\LaTeX は理工系で広く用いられているシステムであり，
-特に数学に関わる分野では，文書作成のデファクトスタンダードと言える．
-しかしながら，その全容について把握するのは容易ではない．
+\chapter*{はじめに}
+本書の目的は「The Not So Short Introduction to \LaTeXe 」\cite{Tobias2021}
+に，\LaTeXe と直接は関わらないが重要な知識と，和文の文書作成に関係する事項を補完することである．
+特に本書の\cref{chapter:lualatex}を読むにあたっては，\cite{Tobias2021}を傍らに置いて欲しい．
 
-たとえば，\TeX /\LaTeX により次の数式を記述したいとする．
-\[
-  f(t) \sim \frac{a_0}{2} + \sum_{n=1}^\infty (a_n\cos nt + b_n\sin nt)
-\]
+また，理工系学生がよく利用するであろう「グラフ作成」の方法を補い，
+サンプルコードを多く載せることで，レポートを作るとき役立つようにしている．
 
-あなたは「シグマ TeX」などと検索することで，概ね次のようなコードを書けばよいことが分かるだろう．
-\begin{codeblock}
-\[
-  f(t) \sim \frac{a_0}{2} + \sum_{n=1}^\infty (a_n\cos nt + b_n\sin nt)
-\]
-\end{codeblock}
-
-しかし，こうして課題のレポートをなんとか作れるようになったとしても，
-「\TeX /\LaTeX とは」と問われると答えに詰まるのではないだろうか．
-
-本稿は「\TeX /\LaTeX を理解して，自由に文書を作成するためのチュートリアル」となるべく書かれている．
-特に，理工系学生がよく利用するであろう「表作成」と「グラフ作成」に重きをおき，
-サンプルコードを多く載せることで，レポートを作るときに役立つようになっている．
-本稿が\TeX /\LaTeX について，ブラックボックスとしてではない理解を得る一助になれば幸いである．
-
-なお，本書の最新版はGitHub（\url{https://github.com/calamari-dev/texlatex}）で配布されている．
-また，この版（ver.0.1.0）のライセンスは\href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja}{CC BY-NC-ND 4.0}である．
+本書の最新版はGitHub（\url{https://github.com/calamari-dev/texlatex}）で配布されている．
+GitHubには本書の\LaTeX ソースも置いてある．
+また，この版（ver.0.1.0）は\href{https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja}{CC BY-NC-ND 4.0}に基づいて配布されている．
 
 \begin{flushright}
   \today

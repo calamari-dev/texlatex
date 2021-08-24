@@ -2,42 +2,194 @@
 
 \begin{document}
 \chapter{\TeX /\LaTeX とは}
+この章では，\TeX /\LaTeX の概略を説明する．
+
 \section{\TeX と\LaTeX}
-\termdef{\TeX}\index{tex@\TeX}とは，Donald Knuthにより開発された組版システムである．
-\termdef{\LaTeX}\index{latex@\LaTeX}とは，Leslie Lamportにより開発された\TeX のマクロである．
+文字・図版などを配置し，紙面を設計する作業を\termdef{組版}\index{くみはん@組版}という．
+\termdef{\TeX}\index{tex@\TeX}は組版処理ソフトウェアの1つである．
+オリジナルの\TeX はDonald Knuthにより開発された．
+今日，オリジナルの\TeX に新機能が追加されることは無いが，様々な拡張版が有志の手で開発されている．
+本書では，Knuthによる最初の\TeX ，およびその拡張を\termdef{\TeX エンジン}\index{texえんじん@\TeX エンジン}
+と総称する．
 
-\begin{codeblock}
-Hello, plain \TeX !
-\bye
-\end{codeblock}
+\TeX を利用する場合，通常は\termdef{マクロパッケージ}\index{まくろぱっけーじ@マクロパッケージ}というものが併用される
+\footnote{\cref{section:package}で説明する「パッケージ」とは別物である．}．
+マクロパッケージは，\TeX エンジンが提供する機能を使いやすくするプログラムである．
+\termdef{\LaTeX}\index{latex@\LaTeX}はマクロパッケージの1つであり，
+\footnote{他にもPlain \TeX，\ConTeXt など，マクロパッケージは複数存在する．}\index{plaintex@Plain \TeX}\index{context@\ConTeXt}
+現在も開発が続いている．\termdef{\LaTeXe}\index{latex2e@\LaTeXe}は今日広く利用されているバージョンの\LaTeX であり，
+本書も主に\LaTeXe について扱う．
 
-この他にも，\ConTeXt というマクロパッケージがあったりする．
+\TeX に関する情報を知りたい場合は，\termdef{CTAN}\index{ctan@CTAN}（\url{https://ctan.org/}）を参照するとよい．
+CTANは「The Comprehensive \TeX\ Archive Network」の略であり，
+\TeX に関係するプログラム・文書・フォントなどのリソースを集約したWebサイトである．
 
-\LaTeXe の話も．
+\section{\TeX を利用する方法}
+\TeX を利用するには，主に2つの方法がある．
+
+\begin{enumerate}
+  \item \TeX ディストリビューションを利用する
+  \item Webサービスを利用する
+\end{enumerate}
+
+まず「1.\TeX ディストリビューションを利用する」について説明する．
+\termdef{\TeX ディストリビューション}\index{texでぃすとりびゅーしょん@\TeX ディストリビューション}とは，
+\TeX に関連するリソースをまとめたソフトウェアである．
+
+現在，日本では\termdef{\TeX\ Live}\index{texlive@\TeX\ Live}という\TeX ディストリビューションがよく使われている．
+\TeX\ Liveは\TeX エンジンだけでなく，フォントや，含まれるソフトウェアのマニュアルなども内包している（マニュアルの参照方法は\cref{subsection:texdoc}で紹介する）．
+インストール方法は，公式サイト（\url{https://www.tug.org/texlive/}），および\cite{asakura2021}にある．
+
+次に「2.Webサービスを利用する」について説明する．\termdef{Overleaf}\index{overleaf@Overleaf}は，
+Webサイト上で\LaTeX を利用できるサービスである．
+インストールの手間を省けるだけでなく，様々な機能をGUIで利用できることが利点である．
+利用方法については，公式サイト（\url{https://www.overleaf.com/}）を参照してほしい．
+
+なお，以下では\TeX\ Liveがインストールされていると仮定する．
 
 \section{\TeX と和文}
-\termdef{\pTeX}\index{ptex@\pTeX}はJIS なんとかの文字集合に対応した\TeX 処理系である．
-\termdef{\upTeX}\index{uptex@\upTeX}は内部コードをUnicodeにした\pTeX の拡張である．
-\termdef{\LuaTeX}\index{luatex@\LuaTeX}は\TeX 処理系を汎用プログラミング言語である\termdef{Lua}\index{lua@Lua}によって
-拡張できるようにした\TeX 処理系である．
+オリジナルの\TeX は和文の組版に対応していない．そのため，和文の組版に対応した\TeX エンジンが開発されてきた．
+\termdef{\pTeX}\index{ptex@\pTeX}と\termdef{\upTeX}\index{uptex@\upTeX}はそうした，和文に対応した\TeX エンジンである．
+
+\pTeX と\upTeX では，\upTeX のほうが多種多様な文字を入力できる．
+正確には，\pTeX は\termdef{JIS X 0208}\index{jisx0208@JIS X 0208}という文字集合に対応しているのに対し，
+\termdef{\upTeX}\index{uptex@\upTeX}はUnicodeの文字集合に属する日中韓の文字を扱える．
+たとえば，「①」を\upTeX では直接入力できるが，\pTeX では工夫を要する\footnote{この工夫については\cite{tanaka2020}を参照のこと．}．
+
+この他にも，\termdef{\LuaTeX}\index{luatex@\LuaTeX}という\TeX エンジンでも和文を扱える．
+\LuaTeX は，\LuaTeX 自身を汎用プログラミング言語\termdef{Lua}\index{lua@Lua}によって
+拡張できるようにした\TeX エンジンである．
+\LuaTeX そのものは，そのままでは和文の組版に対応していない．しかし，\termdef{\LuaTeX -ja}\index{luatexja@\LuaTeX -ja}という
+パッケージ\footnote{パッケージについては\cref{section:package}で改めて述べる．}によって，和文の組版に対応させられる．
+
+\section{ドキュメントクラス}
+以下では\LaTeXe について解説する．
+\LaTeXe の特徴は，文書の執筆者が組版についてあまり気にせずとも，適切なレイアウトがなされた文書を得られることである．
+これは，\LaTeXe の\termdef{ドキュメントクラス}\index{どきゅめんとくらす@ドキュメントクラス}と\termdef{パッケージ}\index{ぱっけーじ@パッケージ}
+という機構によって実現されている．
+
+まず，ドキュメントクラスについて説明する．
+\inlinecode{test.tex}というファイルを以下の内容で作成\footnote{テキストエディタはメモ帳でよい．}し，適当なディレクトリに置く．
+
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx,30pt]{jsarticle}
+\begin{document}
+  試しに数式を入力してみる．
+  \begin{equation}
+    (x^n)' = nx^{n-1}
+  \end{equation}
+\end{document}
+\end{codeblock}
+
+次に，そこをカレントディレクトリとして，次のコマンドを実行する．
+このコマンドにより，マクロパッケージが読み込まれた状態で\TeX エンジンが起動する
+\footnote{このとき起動する\TeX エンジンは，\eupTeX という\upTeX とは少し異なる\TeX エンジンである．このことは\cref{subsection:etex}にもう少し詳しく書いた．}．
+
+\begin{codeblock}
+> uplatex test
+\end{codeblock}
+
+すると，同じディレクトリに\inlinecode{test.dvi}というファイルが出力される．
+\termdef{DVI}\index{dvi@DVI}は，\TeX エンジンによって組版の指示が書き込まれたファイルのファイル形式である
+\footnote{すべての\TeX エンジンがDVIを出力するわけではない．実際，\pTeX ，\upTeX はDVIを出力するが，\LuaTeX はPDFを直接出力する．}．
+指示に沿ったPDFを作成するには，\DVIPDFMx\index{dvipdfmx@\DVIPDFMx}というプログラムを利用する．
+すなわち，次のコマンドを実行する．
+
+\begin{codeblock}
+> dvipdfmx test
+\end{codeblock}
+
+これにより，DVIがPDFへと変換され，\inlinecode{test.pdf}というファイルが同じディレクトリに出力される．
+出力例を\cref{figure:uplatex_output}に示す．
+
+\begin{figure}[htbp]
+  \centering
+  \tcbincludegraphics[myframe,width=\smallfiguresize]{example.pdf}
+  \caption{\upLaTeX の出力例}
+  \label{figure:uplatex_output}
+\end{figure}
+
+\cref{figure:uplatex_output}を見ると，\LaTeX ソースにおいては余白・フォントなどを指定していないにもかかわらず，
+出力されたPDFでは適切な組版が行われていることが分かる．
+
+これは，ソースの1行目「\inlinecode{\documentclass{jsarticle}}」が，そうした設定を代わりに行っているためである．
+より正確には，この行は「\inlinecode{jsarticle}というドキュメントクラスを利用する」ことを宣言している．
+この宣言を読み取った\TeX エンジンは，\inlinecode{jsarticle.cls}というファイルを読み込む．
+\inlinecode{jsarticle.cls}には余白・フォントなどがあらかじめ指定されているので，ユーザが1つ1つ設定せずとも，適切に組版が行われる．
+
+\section{パッケージ}
+\label{section:package}
+前節に続いて，パッケージについて説明する．たとえば，記号「\(\measuredangle\)」を使いたいとする．
+この記号は，\LaTeXe で初めから用意されているわけではない．また，\inlinecode{jsarticle}もこの記号を提供していない．
+
+このようなときは，パッケージを利用して記号を追加するとよい．
+具体的には，「\inlinecode{\documentclass[...]{...}}」と「\inlinecode{\begin{document}}」の間に
+「\inlinecode{\usepackage{amssymb}}」を追記する．
+
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx,30pt]{jsarticle}
+\usepackage{amssymb}
+\begin{document}
+  試しに数式を入力してみる．
+  \begin{equation}
+    \measuredangle
+  \end{equation}
+\end{document}
+\end{codeblock}
+
+2行目「\inlinecode{\usepackage{amssymb}}」を読み取った\TeX エンジンは，
+\inlinecode{amssymb.sty}というファイルを読み込む．
+\inlinecode{amssymb.sty}では，\inlinecode{\measuredangle}というコマンドが「\(\measuredangle\)」を出力するように定義されている．
+そのため，この\LaTeX ソースを前節と同様にPDFへと変換すると，\cref{figure:uplatex_measuredangle}に示す出力が得られる．
+
+\begin{figure}[htbp]
+  \centering
+  \tcbincludegraphics[myframe,width=\smallfiguresize]{measuredangle.pdf}
+  \caption{パッケージによる記号の追加}
+  \label{figure:uplatex_measuredangle}
+\end{figure}
+
+\inlinecode{amssymb}のほかにも，余白を変更したり，グラフを作成したりと，様々なパッケージが
+\TeX\ Liveには含まれている．たとえば\cite{Manuel2021}に，よく使われるパッケージが記載されている．
 
 \section{補遺}
-\subsection{\SATySFi について}
-\termdef{\SATySFi}\index{satysfi@\SATySFi}は，和文に対応した非\TeX 系の組版システムである．
-\SATySFi を利用するという選択肢もある．
+\subsection{Texdoc}
+\label{subsection:texdoc}
+\TeX\ Liveをインストールすると，\TeX\ Liveに含まれるリソースと関係する文書も同時にインストールされる．
+それらの文書は\termdef{Texdoc}\index{texdoc@Texdoc}というプログラムを介して参照できる．
+たとえば，コマンドラインで次のプログラムを実行すると，\TeX\ Liveのガイドを参照できる．
+\begin{codeblock}
+> texdoc texlive
+\end{codeblock}
 
-\subsection{\eTeX について}
-実は，\upLaTeX を起動したときに実行されるのは，元々の\upTeX とは少し異なる\TeX 処理系である．
+コマンドラインに不慣れでも，Texdocのオンライン版（\url{http://texdoc.org/}）を利用できる．
+本書を読むにあたっても，適宜Texdocを参照してほしい．
 
-コマンドラインで\inlinecode{uplatex}を実行すると，次のメッセージが出力される．
+\subsection{文書作成を支援するソフトウェア}
+\TeX で文書を作成するには，テキストファイルを作成して\TeX エンジンを実行すればよい．
+したがって，Windowsに付属するメモ帳とコマンドプロンプトだけでも，\TeX で文書を作成することはできる．
+しかし，通常はより快適に文書を作成するため，文書作成を支援するソフトウェアを利用する．
+
+\TeX\ Liveをインストールしていれば，TeXworks\index{texworks@TeXworks}\footnote{\url{http://www.tug.org/texworks/}}
+というソフトウェアがインストールされている．TeXworksを利用すると，\TeX ファイルの編集と\TeX エンジンの起動をGUIで行える．
+
+また，本書はLaTeX Workshop\index{latexworkshop@LaTeX Workshop}\footnote{\url{https://github.com/James-Yu/LaTeX-Workshop}}と
+llmk\index{llmk@llmk}\footnote{\url{https://github.com/wtsnjp/llmk}}を利用して作成されている．
+前者は\LaTeX ソースの編集を，後者は\TeX エンジンに関係するプログラムの実行を，それぞれ支援するソフトウェアである．
+
+\subsection{\eTeX}
+\label{subsection:etex}
+実は，\upLaTeX を起動したときに実行されるのは，\eupTeX という\upTeX とは異なる\TeX エンジンである．
+実際，コマンドラインで\inlinecode{uplatex}を実行すると，次のメッセージが出力される．
 \begin{codeblock}
 This is e-upTeX, Version 3.141592653-p3.9.0-u1.27-210218-2.6 (utf8.uptex) (TeX Live 2021/W32TeX) (preloaded format=uplatex)
  restricted \write18 enabled.
 **
 \end{codeblock}
 
-本書では以降，\eTeX 拡張の有無についてはいちいち断らないことにする．
-すなわち，\upTeX と言ったら\eupTeX を指すものとする．
+\eupTeX は，\eTeX という\TeX エンジンの拡張であることが\upTeX と異なる
+\footnote{現在利用される\TeX エンジン（\epTeX ・\eupTeX ・\pdfTeX など）の多くは\eTeX の拡張である．}．
+本書では，\eTeX 拡張の有無についてはいちいち断らないことにする．
 
 \subsection{他の命令の引数にできない命令}
 \TeX の仕様により，\inlinecode{\verb}など一部の命令は，他の命令の引数にできない．
