@@ -5,7 +5,6 @@
 
 \usepackage{graphicx}
 \usepackage[svgnames]{xcolor}
-\usepackage{float}
 \usepackage{mathtools,amssymb,amsthm}
 \usepackage[unicode,hidelinks,pdfusetitle]{hyperref}
 \usepackage{cleveref}
@@ -15,9 +14,17 @@
 \usepackage{geometry}
 \usepackage{tocloft}
 \usepackage{floatflt}
-\usepackage{subcaption}
-\usepackage{enumitem}
 \usepackage{pdfpages}
+
+\makeatletter
+\let\tmpmakecaption\@makecaption
+\makeatother
+
+\usepackage{subcaption}
+
+\makeatletter
+\let\@makecaption\tmpmakecaption
+\makeatother
 
 \usepackage{listings}
 \usepackage{pgfplots}
@@ -43,27 +50,31 @@
 \author{cuttlefish\_math}
 \date{\today}
 
-% レイアウト操作
+% 余白・フォント
 \geometry{b5paper,hmargin=15mm,vmargin=20mm}
 \setsansjfont{Source Han Sans JP Regular}[YokoFeatures={JFM=jlreq},BoldFont={Source Han Sans JP Medium}]
 \setmonofont{HackGen Regular}[BoldFont={HackGen Bold}]
+
+% 目次
 \renewcommand{\cfttoctitlefont}{\sffamily\Huge\bfseries}
 \renewcommand{\cftchapfont}{\sffamily\bfseries}
 \renewcommand{\cftchappagefont}{\sffamily\bfseries}
 \setlength{\cftchapnumwidth}{4\zw}
+
+% 索引
 \newcommand{\idxdelim}{\hfill}
 \newcommand{\makeidxhead}[1]{{\vbox{\hbox to \linewidth{\sffamily\bfseries #1\hfill}}}\nopagebreak}
 
 % 参照
-\crefname{theorem}{定理}{定理}
-\crefname{definition}{定義}{定義}
-\crefname{example}{例}{例}
-\crefname{lemma}{補題}{補題}
-\crefname{chapter}{章}{章}
-\crefname{section}{節}{節}
-\crefname{subsection}{小節}{小節}
+\crefname{chapter}{第}{第}
+\crefname{section}{第}{第}
+\crefname{subsection}{第}{第}
 \crefname{table}{表}{表}
 \crefname{figure}{図}{図}
+
+\creflabelformat{chapter}{#2#1#3章}
+\creflabelformat{section}{#2#1#3節}
+\creflabelformat{section}{#2#1#3小節}
 
 % ソースコード
 \definecolor{codeback}{HTML}{EEEEEE}
@@ -116,6 +127,10 @@
 % 図
 \newcommand{\smallfiguresize}{5cm}
 \newcommand{\figuresize}{7cm}
+
+\captionsetup[sub]{%
+  textfont={sf,bf},
+  labelfont={sf,bf}}
 
 \tcbset{%
   myframe/.style={%

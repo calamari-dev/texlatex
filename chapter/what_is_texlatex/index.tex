@@ -15,8 +15,8 @@
 \TeX を利用する場合，通常は\termdef{マクロパッケージ}\index{まくろぱっけーじ@マクロパッケージ}というものが併用される
 \footnote{\cref{section:package}で説明する「パッケージ」とは別物である．}．
 マクロパッケージは，\TeX エンジンが提供する機能を使いやすくするプログラムである．
-\termdef{\LaTeX}\index{latex@\LaTeX}はマクロパッケージの1つであり，
-\footnote{他にもPlain \TeX，\ConTeXt など，マクロパッケージは複数存在する．}\index{plaintex@Plain \TeX}\index{context@\ConTeXt}
+\termdef{\LaTeX}\index{latex@\LaTeX}はマクロパッケージの1つであり
+\footnote{他にもPlain \TeX，\ConTeXt など，マクロパッケージは複数存在する．}\index{plaintex@Plain \TeX}\index{context@\ConTeXt}，
 現在も開発が続いている．\termdef{\LaTeXe}\index{latex2e@\LaTeXe}は今日広く利用されているバージョンの\LaTeX であり，
 本書も主に\LaTeXe について扱う．
 
@@ -53,7 +53,7 @@ Webサイト上で\LaTeX を利用できるサービスである．
 
 \pTeX と\upTeX では，\upTeX のほうが多種多様な文字を入力できる．
 正確には，\pTeX は\termdef{JIS X 0208}\index{jisx0208@JIS X 0208}という文字集合に対応しているのに対し，
-\termdef{\upTeX}\index{uptex@\upTeX}はUnicodeの文字集合に属する日中韓の文字を扱える．
+\upTeX はUnicodeの文字集合に属する日中韓の文字を扱える．
 たとえば，「①」を\upTeX では直接入力できるが，\pTeX では工夫を要する\footnote{この工夫については\cite{tanaka2020}を参照のこと．}．
 
 この他にも，\termdef{\LuaTeX}\index{luatex@\LuaTeX}という\TeX エンジンでも和文を扱える．
@@ -171,11 +171,13 @@ Webサイト上で\LaTeX を利用できるサービスである．
 しかし，通常はより快適に文書を作成するため，文書作成を支援するソフトウェアを利用する．
 
 \TeX\ Liveをインストールしていれば，TeXworks\index{texworks@TeXworks}\footnote{\url{http://www.tug.org/texworks/}}
-というソフトウェアがインストールされている．TeXworksを利用すると，\TeX ファイルの編集と\TeX エンジンの起動をGUIで行える．
+というソフトウェアがインストールされている．TeXworksを利用すると，\TeX ソースの編集と\TeX エンジンの起動をGUIで行える．
 
-また，本書はLaTeX Workshop\index{latexworkshop@LaTeX Workshop}\footnote{\url{https://github.com/James-Yu/LaTeX-Workshop}}と
+本書はVisual Studio Code，および
 llmk\index{llmk@llmk}\footnote{\url{https://github.com/wtsnjp/llmk}}を利用して作成されている．
 前者は\LaTeX ソースの編集を，後者は\TeX エンジンに関係するプログラムの実行を，それぞれ支援するソフトウェアである．
+また，Visual Studio Codeに\LaTeX ソース編集へと特化した機能を追加する，LaTeX Workshop\index{latexworkshop@LaTeX Workshop}\footnote{\url{https://github.com/James-Yu/LaTeX-Workshop}}という
+拡張機能も利用している．
 
 \subsection{\eTeX}
 \label{subsection:etex}
@@ -190,31 +192,5 @@ This is e-upTeX, Version 3.141592653-p3.9.0-u1.27-210218-2.6 (utf8.uptex) (TeX L
 \eupTeX は，\eTeX という\TeX エンジンの拡張であることが\upTeX と異なる
 \footnote{現在利用される\TeX エンジン（\epTeX ・\eupTeX ・\pdfTeX など）の多くは\eTeX の拡張である．}．
 本書では，\eTeX 拡張の有無についてはいちいち断らないことにする．
-
-\subsection{他の命令の引数にできない命令}
-\TeX の仕様により，\inlinecode{\verb}など一部の命令は，他の命令の引数にできない．
-たとえば，次の\LaTeX ソースは\inlinecode{\verb}が
-\inlinecode{\footnote}の引数になっているので不正である．
-\begin{codeblock}
-\documentclass[uplatex,dvipdfmx]{jsarticle}
-\begin{document}
-\TeX のロゴ（\emph{\verb!\TeX!で出力できる}）は，Donald Knuthがこう表記するように求めている．
-\end{document}
-\end{codeblock}
-
-実際，\inlinecode{example.tex}を上記の内容で作成し，
-次のコマンドを実行すると「\inlinecode{LaTeX Error: \verb illegal in command argument.}」というエラーが出力される．
-\begin{codeblock}
-> uplatex -kanji=utf8 -no-guess-input-enc example
-\end{codeblock}
-
-この問題を解決する手っ取り早い方法は，\inlinecode{\verb}を使わないことである．
-すなわち，\textbackslash を\inlinecode{\textbackslash}に置き換えればよい．
-\begin{codeblock}
-\documentclass[uplatex,dvipdfmx]{jsarticle}
-\begin{document}
-\TeX のロゴ（\emph{\texttt{\textbackslash TeX}で出力できる}）は，Donald Knuthがこう表記するように求めている．
-\end{document}
-\end{codeblock}
 
 \end{document}

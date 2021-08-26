@@ -114,7 +114,7 @@ makeindexについてはupmendex\index{upmendex@upmendex}が，和文とUnicode�
   \item GNUPlotによる方法
 \end{enumerate}
 
-\termdef{PGFPlots}\index{pgfplots@PGFPlots}は，\TikZ を利用してデータを可視化するパッケージである．
+PGFPlots\index{pgfplots@PGFPlots}は，\TikZ\index{tikz@\TikZ}というパッケージを利用し，データを可視化するパッケージである．
 利用方法はマニュアル\cite{christian2021}に詳しく記されているので，ここでは\cref{figure:pgfplots}に実例を示すにとどめる．
 
 \begin{codeblock}
@@ -142,7 +142,7 @@ makeindexについてはupmendex\index{upmendex@upmendex}が，和文とUnicode�
   \label{figure:pgfplots}
 \end{figure}
 
-\termdef{GNUPlot}\index{gnuplot@GNUPlot}は，関数やデータを描画するプログラムである．
+GNUPlot\index{gnuplot@GNUPlot}は，関数やデータを描画するプログラムである．
 公式サイト（\url{http://www.gnuplot.info/}）からダウンロードできる．
 こちらも，利用方法は公式サイトに詳しく記されているので，\cref{figure:gnuplot}に実例を示すにとどめる．
 
@@ -180,11 +180,15 @@ gnuplot> exit
 3Dグラフなども同様の要領で作成できる．以下にPGFPlotsを利用した例を示す．
 
 \begin{codeblock}
-\begin{tikzpicture}
-  \begin{axis}[width=7cm,colormap/blackwhite]
-    \addplot3 [surf,miter limit=1,samples=30,domain=-2:2] {exp(-(x^2+y^2))};
-  \end{axis}
-\end{tikzpicture}
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=7cm,colormap/blackwhite]
+      \addplot3 [surf,miter limit=1,samples=30,domain=-2:2] {exp(-(x^2+y^2))};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{\(e^{-(x^2+y^2)}\)のグラフ}
+\end{figure}
 \end{codeblock}
 
 \begin{figure}[htbp]
@@ -194,7 +198,34 @@ gnuplot> exit
       \addplot3 [surf,miter limit=1,samples=30,domain=-2:2] {exp(-(x^2+y^2))};
     \end{axis}
   \end{tikzpicture}
-  \caption{$e^{-(x^2+y^2)}$のグラフ}
+  \caption{\(e^{-(x^2+y^2)}\)のグラフ}
 \end{figure}
+
+\section{補遺}
+\subsection{他の命令の引数にできない命令}
+\TeX の仕様により，\inlinecode{\verb}など一部の命令は，他の命令の引数にできない．
+たとえば，次の\LaTeX ソースは\inlinecode{\verb}が
+\inlinecode{\footnote}の引数になっているので不正である．
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\begin{document}
+\TeX のロゴ（\emph{\verb!\TeX!で出力できる}）は，Donald Knuthがこう表記するように求めている．
+\end{document}
+\end{codeblock}
+
+実際，\inlinecode{example.tex}を上記の内容で作成し，
+次のコマンドを実行すると「\inlinecode{LaTeX Error: \verb illegal in command argument.}」というエラーが出力される．
+\begin{codeblock}
+> uplatex -kanji=utf8 -no-guess-input-enc example
+\end{codeblock}
+
+この問題を解決する手っ取り早い方法は，\inlinecode{\verb}を使わないことである．
+すなわち，\textbackslash を\inlinecode{\textbackslash}に置き換えればよい．
+\begin{codeblock}
+\documentclass[uplatex,dvipdfmx]{jsarticle}
+\begin{document}
+\TeX のロゴ（\emph{\texttt{\textbackslash TeX}で出力できる}）は，Donald Knuthがこう表記するように求めている．
+\end{document}
+\end{codeblock}
 
 \end{document}

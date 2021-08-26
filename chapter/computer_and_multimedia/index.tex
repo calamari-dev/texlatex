@@ -16,8 +16,8 @@
   \caption{Windows 10のメモ帳}
 \end{floatingfigure}
 
-たとえば，最新のWindows 10にあるメモ帳でテキストを保存すると，UTF-8という方式で
-文字列が数値の列に変換される．この他にも，ソフトウェアに応じてASCII，Shift\_JISなど，
+たとえば，最新のWindows 10にあるメモ帳でテキストを保存すると，UTF-8\index{utf8@UTF-8}という方式で
+文字列が数値の列に変換される．この他にも，ソフトウェアに応じてASCII\index{ascii@ASCII}，Shift\_JIS\index{shiftjis@Shift\_JIS}など，
 さまざまな文字コードが利用されている．
 
 現在では\termdef{Unicode}\index{unicode@Unicode}という文字コードの規格が主流になりつつある．
@@ -36,7 +36,7 @@
 
 符号化文字集合は，数値を並べたときに区切れ目がただ1通りに定まるかどうかを考慮していない．
 そこで，あとから区切れ目が分かるように，符号化文字集合（の像）に属する数値を整数の組\footnote{正確には1バイトの組である．}（\termdef{符号単位}\index{ふごうたんい@符号単位}）へと変換する規則が必要になる．
-この規則を\termdef{文字符号化形式}\index{もじふごうかけいしき@文字符号化形式}といい，UTF-8，UTF-16，UTF-32の3つが定義されている．
+この規則を\termdef{文字符号化形式}\index{もじふごうかけいしき@文字符号化形式}といい，UTF-8，UTF-16\index{utf16@UTF-16}，UTF-32\index{utf32@UTF-32}の3つが定義されている．
 
 \begin{figure}[htb]
   \centering
@@ -75,18 +75,6 @@ U+004D U+7CFB U+5217
 \begin{codeblock}
 4D E7 B3 BB E5 88 97
 \end{codeblock}
-
-\begin{comment}
-\section{日本語\TeX と文字コード}
-日本語を使える\TeX 処理系は複数ある．\pTeX は
-
-\pTeX は\termdef{JIS X 0208}\index{jisx0208@JIS X 0208}に含まれる文字に対応する．
-
-\begin{enumerate}
-  \item \pTeX はJIS X 0208に含まれる文字に対応する
-  \item \upTeX ，\XeTeX ，\pdfTeX ，および\LuaTeX はUnicodeに含まれる文字に対応する
-\end{enumerate}
-\end{comment}
 
 \section{ラスタ形式とベクタ形式}
 コンピュータで画像を記録する方法は，\termdef{ラスタ形式}\index{らすたけいしき@ラスタ形式}と\termdef{ベクタ形式}\index{べくたけいしき@ベクタ形式}の2つに大別される．
